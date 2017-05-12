@@ -1,0 +1,75 @@
+<?php
+/**
+ * EaDesgin
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_pdfgenerator
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+//@codingStandardsIgnoreFile
+
+?>
+<?php $_order = $block->getOrder() ?>
+<div class="actions-toolbar">
+    <a href="<?php /* @escapeNotVerified */ echo $block->getPrintAllInvoicesUrl($_order) ?>"
+       target="_blank"
+       class="action print">
+        <span><?php /* @escapeNotVerified */ echo __('Print All Invoices') ?></span>
+    </a>
+</div>
+<?php foreach ($_order->getInvoiceCollection() as $_invoice): ?>
+<div class="order-title">
+    <strong><?php /* @escapeNotVerified */ echo __('Invoice #') ?><?php /* @escapeNotVerified */ echo $_invoice->getIncrementId(); ?></strong>
+    <a href="<?php /* @escapeNotVerified */ echo $block->getPrintInvoiceUrl($_invoice) ?>"
+       onclick="this.target='_blank'"
+       class="action print">
+        <span><?php /* @escapeNotVerified */ echo __('Print Invoice') ?></span>
+    </a>
+    <?php if($block->addPDFLink($_invoice)):?>
+        <a href="<?php /* @escapeNotVerified */ echo  $block->getPrintPDFUrl($_invoice) ?>"
+           onclick="this.target='_blank'"
+           class="action print">
+            <span><?php /* @escapeNotVerified */ echo __('Print PDF Invoice') ?></span>
+        </a>
+    <?php endif?>
+</div>
+<div class="table-wrapper table-order-items invoice">
+    <table class="data table table-order-items invoice" id="my-invoice-table-<?php /* @escapeNotVerified */ echo $_invoice->getId(); ?>">
+        <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Items Invoiced') ?></caption>
+        <thead>
+            <tr>
+                <th class="col name"><?php /* @escapeNotVerified */ echo __('Product Name') ?></th>
+                <th class="col sku"><?php /* @escapeNotVerified */ echo __('SKU') ?></th>
+                <th class="col price"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
+                <th class="col qty"><?php /* @escapeNotVerified */ echo __('Qty Invoiced') ?></th>
+                <th class="col subtotal"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
+            </tr>
+        </thead>
+        <?php $_items = $_invoice->getAllItems(); ?>
+        <?php $_count = count($_items) ?>
+        <?php foreach ($_items as $_item): ?>
+        <?php if ($_item->getOrderItem()->getParentItem()) {
+    continue;
+} ?>
+        <tbody>
+            <?php echo $block->getItemHtml($_item) ?>
+        </tbody>
+        <?php endforeach; ?>
+        <tfoot>
+            <?php echo $block->getInvoiceTotalsHtml($_invoice)?>
+        </tfoot>
+    </table>
+</div>
+<?php echo $block->getInvoiceCommentsHtml($_invoice)?>
+<?php endforeach; ?>

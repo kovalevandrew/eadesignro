@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * EaDesgin
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_pdfgenerator
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Eadesigndev\Pdfgenerator\Api\Data\TemplatesInterface"
+                type="Eadesigndev\Pdfgenerator\Model\Pdfgenerator" />
+    <preference for="Eadesigndev\Pdfgenerator\Api\TemplatesRepositoryInterface"
+                type="Eadesigndev\Pdfgenerator\Model\PdfgeneratorRepository" />
+    <preference for="Eadesigndev\Pdfgenerator\Model\Plugin\Config"
+                type="Eadesigndev\Opicmsppdfgenerator\Model\Plugin\Config" />
+    <preference for="Eadesigndev\Pdfgenerator\Model\Plugin\Printinvoice"
+                type="Eadesigndev\Opicmsppdfgenerator\Model\Plugin\Printinvoice" />
+    <preference for="Eadesigndev\Pdfgenerator\Controller\Adminhtml\Templates\Save"
+                type="Eadesigndev\Opicmsppdfgenerator\Controller\Adminhtml\Templates\Save" />
+    <preference for="Eadesigndev\Pdfgenerator\Model\Email\SenderBuilder"
+                type="Eadesigndev\Opicmsppdfgenerator\Model\Email\SenderBuilder" />
+    <preference for="Magento\Sales\Block\Order\Invoice\Items"
+                type="Eadesigndev\Opicmsppdfgenerator\Block\Sales\Order\Invoice\Items" />
+    <preference for="Magento\Shipping\Block\Items"
+                type="Eadesigndev\Opicmsppdfgenerator\Block\Sales\Shipment\Items" />
+    <preference for="Magento\Sales\Block\Order\Info\Buttons"
+                type="Eadesigndev\Opicmsppdfgenerator\Block\Sales\Order\Info\Buttons" />
+    <preference for="Magento\Sales\Block\Order\Creditmemo\Items"
+                type="Eadesigndev\Opicmsppdfgenerator\Block\Sales\Order\Creditmemo\Items" />
+    <preference for="Eadesigndev\Pdfgenerator\Helper\Data"
+                type="Eadesigndev\Opicmsppdfgenerator\Helper\Data" />
+
+    <!--fix for bug magento https://github.com/magento/magento2/issues/5105-->
+    <preference for="Magento\GroupedProduct\Block\Order\Email\Items\Order\Grouped"
+                type="Eadesigndev\Opicmsppdfgenerator\Block\Sales\Order\Email\Items\Order\Grouped" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="eadesign_pdf_templates_data_source" xsi:type="string">Eadesigndev\Pdfgenerator\Model\ResourceModel\Pdfgenerator\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Eadesigndev\Pdfgenerator\Model\ResourceModel\Pdfgenerator\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">eadesign_pdf_templates</argument>
+            <argument name="eventPrefix" xsi:type="string">eadesign_pdf_templates_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">templates_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Eadesigndev\Pdfgenerator\Model\ResourceModel\Pdfgenerator</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="TemplatesGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Eadesigndev\Pdfgenerator\Model\Resource\Pdfgenerator\Grid\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">TemplatesGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Eadesigndev/Pdfgenerator/Model/ResourceModel/Pdfgenerator/Grid/Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">eadesign_pdf_templates</argument>
+            <argument name="resourceModel" xsi:type="string">Eadesigndev\Pdfgenerator\Model\ResourceModel\Pdfgenerator</argument>
+        </arguments>
+    </virtualType>
+
+</config>

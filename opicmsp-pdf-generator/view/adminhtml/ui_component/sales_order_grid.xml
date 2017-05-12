@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                </item>
+            </argument>
+            <action name="set_status">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">set_status</item>
+                        <item name="label" xsi:type="string" translate="true">EA PDF Select template</item>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="configurableObject">
+                    <argument name="class" xsi:type="string">Eadesigndev\Opicmsppdfgenerator\UI\Component\Sales\Order\Masspdf\Pdftemplates</argument>
+                    <argument name="data" xsi:type="array">
+                        <item name="urlPath" xsi:type="string">opicmsppdfgenerator/order_massaction/printpdf</item>
+                        <item name="paramName" xsi:type="string">template_id</item>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Print mass pdf?</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure?</item>
+                        </item>
+                    </argument>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>
+
